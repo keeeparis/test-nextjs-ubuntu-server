@@ -2,8 +2,8 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import React from 'react';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
-const API = `${BASE_URL}/api`;
+const BASE_API = process.env.NEXT_PUBLIC_BASE_API;
+const API = `${BASE_API}/api`;
 
 interface ListProps {
   data: {
@@ -46,7 +46,7 @@ const List = ({ data }: ListProps) => {
           <div key={supermarket.id}>
             <h2>{supermarket.attributes.Name}</h2>
             <p>{supermarket.attributes.Url}</p>
-            <Image src={`${BASE_URL}${supermarket.attributes.Image.data.attributes.url}`} alt={supermarket.attributes.Image.data.attributes.name} width={supermarket.attributes.Image.data.attributes.width} height={supermarket.attributes.Image.data.attributes.height} />
+            <Image src={`${BASE_API}${supermarket.attributes.Image.data.attributes.url}`} alt={supermarket.attributes.Image.data.attributes.name} width={supermarket.attributes.Image.data.attributes.width} height={supermarket.attributes.Image.data.attributes.height} />
           </div>
         )
       })}
@@ -57,6 +57,8 @@ const List = ({ data }: ListProps) => {
 export default List;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  console.log(BASE_API)
+  console.log(API)
   const response = await fetch(`${API}/supermarkets?populate=*`);
   const data = await response.json();
 
